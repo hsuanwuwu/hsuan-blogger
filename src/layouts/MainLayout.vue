@@ -6,7 +6,7 @@
         show-if-above
         :mini="miniDraw"
         :width="drawWidth"
-        :breakpoint="400"
+        :breakpoint="drawBreakWidth"
         transition="fade"
         :class="{'mini-drawer': miniDraw, 'normal-drawer': !miniDraw}"
       >
@@ -66,7 +66,7 @@
       </q-drawer>
       
       <router-view />
-      <q-page-sticky position="top-right" :offset="fabPos">
+      <q-page-sticky position="top-right" :offset="fabPos" v-if="hideDraw">
         <q-fab v-model="isFabOpen" label="" vertical-actions-align="right" color="purple"
               icon="keyboard_arrow_down" direction="down">
           <q-fab-action color="primary" @click="onClick" icon="mail" label="" />
@@ -89,12 +89,14 @@ export default {
   data() {
     return {
       miniDraw: false,
+      drawBreakWidth: 320,
+      hideDraw: false,
       drawWidth: 250,
       isFabOpen: false,
       fabPos: [20, 20],
       avatar: null,
       avatarBk: null,
-      person: null,
+      person: {},
     };
   },
   computed: {
@@ -122,6 +124,7 @@ export default {
     updateView() {
       this.miniDraw = window.innerWidth <= 768;
       this.drawWidth = window.innerWidth <= 960 ? 180 : 300;
+      this.hideDraw = window.innerWidth <= this.drawBreakWidth;
     },
   },
 };
@@ -134,7 +137,9 @@ $avatar-bk-mini-height: 63px
 .avatar-bk
   background: steelblue
 .avatar-img
-  background: #feffd9
+  padding-top: 3px
+  img
+    background: #feffd9
 .normal-drawer
   .drawer-scroll
     height: calc(100% - #{$avatar-bk-height})
