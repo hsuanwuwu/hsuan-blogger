@@ -12,7 +12,7 @@
       >
         <q-scroll-area class="drawer-scroll" style="border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item clickable v-ripple class="drawer-item">
+            <q-item clickable v-ripple class="drawer-item" @click="goto('/')">
               <q-item-section avatar>
                 <q-icon name="las la-home" />
               </q-item-section>
@@ -69,10 +69,10 @@
       <q-page-sticky position="top-right" :offset="fabPos" v-if="hideDraw">
         <q-fab v-model="isFabOpen" label="" vertical-actions-align="right" color="purple"
               icon="keyboard_arrow_down" direction="down">
-          <q-fab-action color="primary" @click="onClick" icon="mail" label="" />
-          <q-fab-action color="secondary" @click="onClick" icon="alarm" label="" />
-          <q-fab-action color="orange" @click="onClick" icon="airplay" label="" />
-          <q-fab-action color="accent" @click="onClick" icon="room" label="" />
+          <q-fab-action color="primary" @click="onClick" icon="las la-home" label="" />
+          <q-fab-action color="secondary" @click="onClick" icon="las la-seedling" label="" />
+          <q-fab-action color="orange" @click="onClick" icon="las la-paper-plane" label="" />
+          <q-fab-action color="accent" @click="onClick" icon="las la-laptop-code" label="" />
         </q-fab>
       </q-page-sticky>
     </q-page-container>
@@ -125,6 +125,9 @@ export default {
       this.miniDraw = window.innerWidth <= 768;
       this.drawWidth = window.innerWidth <= 960 ? 180 : 300;
       this.hideDraw = window.innerWidth <= this.drawBreakWidth;
+    },
+    goto(path) {
+      this.$router.push(path);
     },
   },
 };

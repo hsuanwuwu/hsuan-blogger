@@ -1,8 +1,8 @@
 <template>
   <q-page padding class="flex flex-center content-start">
-    <ArticleSummary/>
-    <ArticleSummary/>
-    <ArticleSummary/>
+    <article-summary/>
+    <article-summary/>
+    <article-summary/>
   </q-page>
 </template>
 
