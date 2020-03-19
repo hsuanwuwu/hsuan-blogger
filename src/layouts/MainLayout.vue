@@ -39,7 +39,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple class="drawer-item">
+            <q-item clickable v-ripple class="drawer-item" @click="goto('tech')">
               <q-item-section avatar>
                 <q-icon name="las la-laptop-code" />
               </q-item-section>
@@ -115,10 +115,20 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener('resize', _.debounce(this.updateView, 300));
-    this.person = new Person('Hope');
+    this.avatarBk = '/api/img/default_bk';
+    this.addEventListener();
+    this.getData();
   },
   methods: {
+    addEventListener() {
+      window.addEventListener('resize', _.debounce(this.updateView, 300));
+    },
+    async getData() {
+      const personId = '0';
+      this.avatar = `/api/img/avatar/${personId}`;
+      const data = await this.$axios.get(`/api/user/${0}`);
+      this.person = new Person(data.data.name);
+    },
     onClick() {
     },
     updateView() {

@@ -90,7 +90,19 @@ module.exports = function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api/article/(.*)': 'statics/mock/data/article/$1.json',
+            '^/api/img/(.*)': 'statics/mock/img/$1.jpg',
+            '^/api/user/(.*)': 'statics/mock/data/user/$1.json',
+          }
+        }
+      }
     },
 
     // animations: 'all', // --- includes all animations

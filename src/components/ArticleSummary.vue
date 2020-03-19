@@ -2,8 +2,9 @@
   <div class="container">
     <q-carousel
       v-model="slide"
-      transition-prev="scale"
-      transition-next="scale"
+      transition-prev="fade"
+      transition-next="fade"
+      dark
       swipeable
       animated
       control-color="white"
@@ -11,20 +12,23 @@
       padding
       arrows
       height="300px"
+      :infinite="true"
       class="bg-primary text-white shadow-1 rounded-borders"
     >
       <q-carousel-slide v-for="(img, i) in imgs" :key="i"
-        :name="`${i}`" :img-src="img" class="column no-wrap flex-center">
-        <div class="q-mt-md text-center" v-if="isPreview">
+        :name="`${i}`" :img-src="img"
+        class="column no-wrap flex-center">
+        <div class="q-mt-md text-center title">
           {{ title }}
         </div>
       </q-carousel-slide>
     </q-carousel> 
     <div class="flex content">
-        <p :class="{'preview': isPreview}">{{ content }}</p>
-    </div>
-    <div class="column items-end go-btn" :v-if="isPreview">
-        <q-btn class="col-1" color="primary" label="進入閱讀"/>
+        <div :class="{'preview': isPreview}">
+          <div class="line" v-for="(text, idx) in styledContent" :key="idx">
+            {{ text }}
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -37,14 +41,23 @@ export default {
       default: true,
     },
     imgs: {
-      default: () => ['statics/default_bk.jpg', 'aa', 'aa'],
+      default: () => ['statics/default_bk.jpg'],
+    },
+    title: {
+      default: () => '',
+    },
+    content: {
+      default: () => '',
+    },
+  },
+  computed: {
+    styledContent() {
+      return this.content.split(/\n/g);
     },
   },
   data () {
     return {
       slide: '0',
-      title: 'Title Title Title...',
-      content: '..............Lorem..................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................LoremLoremLoremLoremLorem...................Lorem...................Lorem...................Lorem...................Lorem.......... .........Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem...................Lorem......',
     };
   },
 };
@@ -66,11 +79,18 @@ export default {
   .content
     margin-top: 12px
     font-size: 16px
-    line-height: 1.6em
     word-break: break-word
     .preview
       @include multiline-preview
+    .line
+      min-height: 1.6em
 
 .go-btn
   margin-bottom: 20px
+
+.title
+  font-size: 1.6em
+
+.q-carousel__slide
+  box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.3)
 </style>
